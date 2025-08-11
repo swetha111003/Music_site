@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSIC PLAYER</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="music-player-body">
+        <h2> U1 DRUGS </h2>
+        <img class="track-image" id="trackImage" src="#" alt="Track Image">
+
+        <h3 id="trackName"></h3>
+        <audio id="audioPlayer" controls>
+            <source src="music/u1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="controls">
+            <button class="prev-button" id="prevButton">&#9665;</button>
+            <button class="play-pause-button" id="playPauseButton">&#9658;</button>
+            <button class="next-button" id="nextButton">&#9655;</button>
+        </div>
+    </div>
+    <script>
+    
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseButton = document.getElementById('playPauseButton');
+        const nextButton = document.getElementById('nextButton');
+        const prevButton = document.getElementById('prevButton');
+        const trackNameElement = document.getElementById('trackName');
+        const trackImageElement = document.getElementById('trackImage'); 
+    
+        const audioFiles = [
+            { name: 'Ethu Varai Illatha', src: 'music/u1.mp3', image: 'trackimages/u1.jpg' },
+            { name: '3', src: 'music/u2.mp3', image: 'trackimages/u2.jpg' },
+            { name: 'Ennai Vittu Uyire Ponalum', src: 'music/u3.mp3', image: 'trackimages/u3.jpg' },
+            { name: 'Kanave Unnai vanthu Sera', src: 'music/u4.mp3', image: 'trackimages/u4.jpg' },
+            { name: 'Uyire Uyire', src: 'music/u5.mp3', image: 'trackimages/u5.jpg' },
+            { name: 'Mankatha', src: 'music/u6.mp3', image: 'trackimages/u6.jpg' },
+            { name: 'Manmathane', src: 'music/u7.mp3', image: 'trackimages/u7.jpg' },
+            { name: 'Venmagam', src: 'music/u8.mp3', image: 'trackimages/u8.jpg' },
+            
+        ];
+        
+        let currentTrack = 0;
+        let isPlaying = false;
+
+        function updateTrackName() {
+            trackNameElement.textContent = audioFiles[currentTrack].name;
+            trackImageElement.src = audioFiles[currentTrack].image;
+        }
+
+        
+        function togglePlayPause() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                playPauseButton.textContent = '\u25BA'; 
+            } else {
+                audioPlayer.play();
+                isPlaying = true;
+                playPauseButton.textContent = '\u275A\u275A'; 
+            }
+        }
+       
+        playPauseButton.addEventListener('click', () => {
+            togglePlayPause();
+        });
+  
+        nextButton.addEventListener('click', () => {
+            currentTrack = (currentTrack + 1) % audioFiles.length;
+            audioPlayer.src = audioFiles[currentTrack].src;
+            updateTrackName();
+            if (isPlaying) {
+                audioPlayer.play(); 
+            }
+        });
+        
+        prevButton.addEventListener('click', () => {
+            currentTrack = (currentTrack - 1 + audioFiles.length) % audioFiles.length;
+            audioPlayer.src = audioFiles[currentTrack].src;
+            updateTrackName();
+            if (isPlaying) {
+                audioPlayer.play();
+            }
+        });
+
+       
+        updateTrackName();
+    </script>
+
+</body>
+
+</html>
